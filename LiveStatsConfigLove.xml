@@ -1,0 +1,66 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+ 
+ <Frame name="LiveStats_ConfigLoveFrame" 
+    toplevel="true" parent="UIParent" frameStrata="DIALOG" 
+    hidden="true" enableMouse="true">
+	<Size><AbsDimension x="500" y="330"/></Size>
+	<Anchors><Anchor point="CENTER"/></Anchors>
+	
+	<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" 
+		edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+		<BackgroundInsets>
+			<AbsInset left="11" right="12" top="12" bottom="11"/>
+		</BackgroundInsets>
+		<TileSize><AbsValue val="32"/></TileSize>
+		<EdgeSize><AbsValue val="32"/></EdgeSize>
+	</Backdrop>
+	<Layers>
+		<Layer level="ARTWORK">
+			<Texture file="Interface\DialogFrame\UI-DialogBox-Header">
+				<Size><AbsDimension x="256" y="64"/></Size>
+				<Anchors>
+					<Anchor point="TOP">
+					<Offset><AbsDimension x="0" y="12"/></Offset>
+					</Anchor>
+				</Anchors>
+			</Texture>
+		</Layer>
+		<Layer level="OVERLAY">
+			<FontString inherits="GameFontNormal" text="LiveStats">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="$parent"></Anchor>
+				</Anchors>
+			</FontString>
+		</Layer>
+		<Layer level="OVERLAY">
+			<FontString inherits="GameFontNormalLarge" text="Feel free to share this addon! Updates may be available at github. If u have an issue or would like an extra feature added pls report here: . If you just wanna say hi, feel free to pm me Zunrin - Evermoon or Zunrin#5135 :)" wordwrap="true" justifyH="LEFT">
+				<Anchors>
+					<Anchor point="TOLEFT" relativeTo="$parent">
+						<Offset x="30" y="-30"/>
+					</Anchor>
+				</Anchors>
+				<Size>
+					<AbsDimension x="450" y="100"/>
+				</Size>
+			</FontString>
+		</Layer>
+	</Layers>
+	
+	
+	<Frames>
+		<Button name="$parent_ButtonClose" inherits="OptionsButtonTemplate" text="Close">
+		  <Anchors>
+			<Anchor point="BOTTOMRIGHT" relativeTo="$parent">
+			  <Offset x="-12" y="16"/>
+			</Anchor> 
+		  </Anchors>
+		  <Scripts>
+			<OnClick> self:GetParent():Hide(); </OnClick>
+		  </Scripts>
+		</Button>
+	</Frames>
+	
+	
+ </Frame>
+ </Ui>

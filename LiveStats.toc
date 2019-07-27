@@ -1,0 +1,22 @@
+## Interface: 50400
+## Author: Zunrin
+## Version: v0.00.01
+
+## Title: Live Stats
+## Notes: Shows Dot Mult in Real Time
+## SavedVariables: LiveStats_config
+
+LibStub.lua
+LibGraph-2.0\LibGraph-2.0.lua
+LiveStats.lua
+LiveStats.xml
+LiveStatsConfig.xml
+LiveStatsConfig.lua
+LiveStatsConfigBuffs.xml
+LiveStatsConfigBuffs.lua
+LiveStatsConfigDots.xml
+LiveStatsConfigDots.lua
+LiveStatsConfigStats.xml
+LiveStatsConfigStats.lua
+LiveStatsConfigLove.xml
+LiveStatsConfigLove.lua
