@@ -1,7 +1,8 @@
 local nmBuffs = 37
 
 local listAllBuffs = {
-	{1459,"Arcane intel"},
+	{1459,"Arcane Brilliance"},
+	{61316,"Dalaran Brilliance"},
 	{77747,"Burning Wrath"},
 	{109773,"Dark Inten"},
 	{126309,"Still Water"},
@@ -31,6 +32,8 @@ local listAllBuffs = {
 	
 	{110909,"Alter Time"},
 	{7302,"Frost Armor"},
+	{6117,"Mage Armor"},
+	{30482,"Molten Armor"},
 	{116257,"Invocation"},	
 	{89744,"Wizardry"},
 	

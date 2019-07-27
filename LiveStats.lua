@@ -34,6 +34,7 @@ end
 local allBuffs = {
 	[89744] = {{"Int %", 5}}, --Wizardry
 	[1459] = {{"SP Unique", 10},{"Crit Unique", 5}}, --Arcane intel
+	[61316] = {{"SP Unique", 10},{"Crit Unique", 5}}, --Dalaran intel
 	[77747] = {{"SP Unique", 10}}, -- Burning Wrath
 	[109773] = {{"SP Unique", 10}}, -- Dark Intent
 	[126309] = {{"SP Unique", 10},{"Crit Unique", 5}}, -- Still Water
@@ -56,6 +57,8 @@ local allBuffs = {
 	[110909] = {{"Alter Time", 0}}, --Alter time
 	[138317] = {{"Haste r", 1800},{"Crit r", 1800},{"Mast r", 1800}}, --Alter time tier
 	[7302] = {{"Haste %", 7}}, --Frost Armor
+	[6117] = {{"Mast r", 3000}}, --Mage Armor
+	[30482] = {{"Crit %", 5}}, --Molten Armor
 	[116257] = {{"SP %", 15}}, --Invocation
 	[137590] = {{"Haste %", 30}}, --Lego Gem
 	[139133] = {{"Int r", 7903}}, --Cha-Ye (nm)
@@ -256,10 +259,15 @@ function LiveStats_VARIABLES_LOADED()
 								[90363]=true,
 								[115921]=true,
 								[20217]=true,
-								[138703]=false}
+								[138703]=false,
+								[61316]=false,
+								[6117]=false,
+								[30482]=false}
 		LiveStats_config[LiveStats_realm][LiveStats_char].buffsToTrack = buffsToTrack
 	end
-		
+	-- LiveStats_config[LiveStats_realm][LiveStats_char].buffsToTrack[6117]=false
+	-- LiveStats_config[LiveStats_realm][LiveStats_char].buffsToTrack[30482]=false
+	
 	if not LiveStats_config[LiveStats_realm][LiveStats_char].dotsToTrack then
 		local dotsToTrack = {[114923]=false, --NT
 								[44457]=false, --LB
