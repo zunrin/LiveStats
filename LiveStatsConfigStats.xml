@@ -113,7 +113,7 @@
 			</FontString>
 		</Layer>
 		<Layer level="OVERLAY">
-			<FontString inherits="GameFontNormalLarge" text="Enter your stats as they appear on your char sheet! (Make sure u dont have any buffs on when checking your stats (the 5% from gear being all cloth/leather/mail is fine, I assume you have it)   (may be a tiny bit off due to rounding, but close enough)" wordwrap="true" justifyH="LEFT">
+			<FontString inherits="GameFontNormalLarge" text="Enter your stats as they appear on your char sheet! Make sure u dont have any buffs on when checking your stats (the 5% int every class gets is fine since u can't remove it)   ( the values may be a tiny bit off due to rounding, but close enough)" wordwrap="true" justifyH="LEFT">
 				<Anchors>
 					<Anchor point="TOLEFT" relativeTo="$parent">
 						<Offset x="30" y="-30"/>
