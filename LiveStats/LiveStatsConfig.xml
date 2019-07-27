@@ -1,0 +1,244 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+ <Script file="LiveStatsConfig.lua"/>
+ 
+ <EditBox name="EditBoxNumTemplate" letters="5" virtual="true">
+    <Size x="50" y="32" />
+    <Layers>
+        <Layer level="BACKGROUND">
+            <Texture file="Interface\ChatFrame\UI-ChatInputBorder-Left">
+                <Size x="50" y="32" />
+                <Anchors>
+                    <Anchor point="LEFT">
+                        <Offset x="-10" y="0" />
+                    </Anchor>
+                </Anchors>
+                <TexCoords left="0" right="0.2" top="0" bottom="1.0"/>
+            </Texture>
+            <Texture file="Interface\ChatFrame\UI-ChatInputBorder-Right">
+                <Size x="50" y="32" />
+                <Anchors>
+                    <Anchor point="RIGHT">
+                        <Offset x="10" y="0" />
+                    </Anchor>
+                </Anchors>
+                <TexCoords left="0.7" right="1.0" top="0" bottom="1.0"/>
+            </Texture>
+        </Layer>
+    </Layers>
+	<Scripts>
+		<OnShow> LS_LoadEditBox(self) </OnShow>
+		<OnTextChanged> LS_EditBoxChanged(self) </OnTextChanged>
+	</Scripts>
+    <FontString inherits="ChatFontNormal" />
+</EditBox>
+ 
+ <Frame name="LiveStats_ConfigFrame" 
+    toplevel="true" parent="UIParent" frameStrata="DIALOG" 
+    hidden="true" enableMouse="true">
+	<Size><AbsDimension x="260" y="280"/></Size>
+	<Anchors><Anchor point="CENTER"/></Anchors>
+	
+	<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" 
+		edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+		<BackgroundInsets>
+			<AbsInset left="11" right="12" top="12" bottom="11"/>
+		</BackgroundInsets>
+		<TileSize><AbsValue val="32"/></TileSize>
+		<EdgeSize><AbsValue val="32"/></EdgeSize>
+	</Backdrop>
+	<Layers>
+		<Layer level="ARTWORK">
+			<Texture file="Interface\DialogFrame\UI-DialogBox-Header">
+				<Size><AbsDimension x="256" y="64"/></Size>
+				<Anchors>
+					<Anchor point="TOP">
+					<Offset><AbsDimension x="0" y="12"/></Offset>
+					</Anchor>
+				</Anchors>
+			</Texture>
+			
+			<FontString name="$parent_PosXLabel" inherits="GameFontNormal" text="PosX">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="25" y="-70"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</FontString>
+			<FontString name="$parent_PosYLabel" inherits="GameFontNormal" text="PosY">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="140" y="-70"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</FontString>
+			<FontString name="$parent_SizeXLabel" inherits="GameFontNormal" text="SizeX">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="25" y="-100"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</FontString>
+			<FontString name="$parent_SizeYLabel" inherits="GameFontNormal" text="SizeY">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="140" y="-100"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</FontString>
+		</Layer>
+		
+		<Layer level="OVERLAY">
+			<FontString inherits="GameFontNormal" text="LiveStats Config">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="$parent"></Anchor>
+				</Anchors>
+			</FontString>
+		</Layer>
+	</Layers>
+	
+	
+	<Frames>
+		<Button name="$parent_ButtonClose" inherits="OptionsButtonTemplate" text="Close">
+		  <Anchors>
+			<Anchor point="BOTTOMRIGHT" relativeTo="$parent">
+			  <Offset x="-12" y="16"/>
+			</Anchor> 
+		  </Anchors>
+		  <Scripts>
+			<OnClick> self:GetParent():Hide() </OnClick>
+		  </Scripts>
+		</Button>
+		
+			
+		<CheckButton name="$parent_ButtonOn" inherits="UICheckButtonTemplate" checked="false">
+			<Anchors>
+				<Anchor point="TOPLEFT">
+					<Offset>
+						<AbsDimension x="20" y="-30"></AbsDimension>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Layers>
+				<Layer level="ARTWORK">
+					<FontString name="$parentText" inherits="GameFontNormal" text="ON/OFF">
+						<Anchors>
+							<Anchor point="LEFT" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="-2" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</FontString>
+				</Layer>
+			</Layers>
+			<Scripts>
+				<OnClick> LiveStatsOnToggle(); </OnClick>
+			</Scripts>
+		</CheckButton>
+		
+		<Button name="$parent_ButtonBuffs" inherits="OptionsButtonTemplate" text="Buffs to Track">
+			<Anchors>
+				<Anchor point="TOPLEFT">
+					<Offset>
+						<AbsDimension x="20" y="-130"></AbsDimension>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick> LiveStatsConfigBuffsShow(); </OnClick>
+			</Scripts>
+		</Button>
+		
+		<Button name="$parent_ButtonDots" inherits="OptionsButtonTemplate" text="Dots to Track">
+			<Anchors>
+				<Anchor point="TOPLEFT">
+					<Offset>
+						<AbsDimension x="20" y="-160"></AbsDimension>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick> LiveStatsConfigDotsShow(); </OnClick>
+			</Scripts>
+		</Button>
+		
+		<Button name="$parent_ButtonStats" inherits="OptionsButtonTemplate" text="Config your stats">
+			<Anchors>
+				<Anchor point="TOPLEFT">
+					<Offset>
+						<AbsDimension x="20" y="-190"></AbsDimension>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick> LiveStatsConfigStatsShow(); </OnClick>
+			</Scripts>
+		</Button>
+		
+		<Button name="$parent_ButtonStats" inherits="OptionsButtonTemplate" text="Share the love!">
+			<Anchors>
+				<Anchor point="TOPLEFT">
+					<Offset>
+						<AbsDimension x="20" y="-220"></AbsDimension>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick> LiveStatsConfigLoveShow(); </OnClick>
+			</Scripts>
+		</Button>
+		
+		<EditBox name="$parent_PosXEdit" inherits="EditBoxNumTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT">
+					<Offset>
+						<AbsDimension x="70" y="-60"></AbsDimension>
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</EditBox>
+		<EditBox name="$parent_PosYEdit" inherits="EditBoxNumTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT">
+					<Offset>
+						<AbsDimension x="185" y="-60"></AbsDimension>
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</EditBox>
+		<EditBox name="$parent_SizeXEdit" inherits="EditBoxNumTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT">
+					<Offset>
+						<AbsDimension x="70" y="-90"></AbsDimension>
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</EditBox>
+		<EditBox name="$parent_SizeYEdit" inherits="EditBoxNumTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT">
+					<Offset>
+						<AbsDimension x="185" y="-90"></AbsDimension>
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</EditBox>
+	</Frames>
+	
+	
+	
+	<Scripts>
+	 	<OnShow> LiveStatsConfigFrameOnShow(); </OnShow>
+	</Scripts>
+ </Frame>
+ </Ui>
