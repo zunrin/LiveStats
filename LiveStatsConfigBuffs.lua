@@ -35,9 +35,9 @@ local listAllBuffs = {
 	{89744,"Wizardry"},
 	
 	{138703,"Volatile Talisman of the Shado Pan"},
-	{139133,"Cha-Ye (nm)"},
-	{138898,"Breath of the Hydra (nm)"},
-	{138786,"Wusholay (nm)"},
+	{139133,"Cha-Ye"},
+	{138898,"Breath of the Hydra"},
+	{138786,"Wusholay"},
 	{138317,"Alter time tier"},
 		
 	{137590,"Lego Gem"},
