@@ -32,6 +32,10 @@
 	LiveStats_ConfigStatsFrame:Show();  
  end
  
+ function LiveStatsConfigLoveShow()
+	LiveStats_ConfigLoveFrame:Show();  
+ end
+ 
 function LS_LoadEditBox(self)
 	local name = self:GetName()
 	if name == "LiveStats_ConfigFrame_PosXEdit" then

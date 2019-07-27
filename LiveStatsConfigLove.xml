@@ -34,7 +34,7 @@
 			</FontString>
 		</Layer>
 		<Layer level="OVERLAY">
-			<FontString inherits="GameFontNormalLarge" text="Feel free to share this addon! Updates may be available at github. If u have an issue or would like an extra feature added pls report here: . If you just wanna say hi, feel free to pm me Zunrin - Evermoon or Zunrin#5135 :)" wordwrap="true" justifyH="LEFT">
+			<FontString inherits="GameFontNormalLarge" text="Feel free to share this addon! Updates may be available at github. If u have an issue or would like an extra feature added pls report here: https://github.com/zunrin/LiveStats/issues . If you just wanna say hi, feel free to pm me Zunrin - Evermoon or Zunrin#5135 :)" wordwrap="true" justifyH="LEFT">
 				<Anchors>
 					<Anchor point="TOLEFT" relativeTo="$parent">
 						<Offset x="30" y="-30"/>
