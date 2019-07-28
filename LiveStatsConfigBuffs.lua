@@ -41,6 +41,7 @@ local listAllBuffs = {
 	{139133,"Cha-Ye"},
 	{138898,"Breath of the Hydra"},
 	{138786,"Wusholay"},
+	{138964,"UVLS"},
 	{138317,"Alter time tier"},
 		
 	{137590,"Lego Gem"},

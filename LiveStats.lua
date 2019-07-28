@@ -66,6 +66,7 @@ local allBuffs = {
 	[125487] = {{"Int r", 2000}}, -- Lightweave
 	[138786] = {{"Int s", "Electrified", 1, 10}}, -- Wusholay (nm)
 	[138703] = {{"Haste r", 9483}}, -- Volatile Talisman (nm)
+	[138964] = {{"Crit %", 100}}, -- UVLS
 	[26297] = {{"Haste %", 20}}, -- Berserking
 	[80353] = {{"Haste %", 30}}, -- TW
 	[105702] = {{"Int r", 4000}}, -- Jade Pot
@@ -262,10 +263,11 @@ function LiveStats_VARIABLES_LOADED()
 								[138703]=false,
 								[61316]=false,
 								[6117]=false,
-								[30482]=false}
+								[30482]=false,
+								[138964]=false}
 		LiveStats_config[LiveStats_realm][LiveStats_char].buffsToTrack = buffsToTrack
 	end
-	-- LiveStats_config[LiveStats_realm][LiveStats_char].buffsToTrack[6117]=false
+	LiveStats_config[LiveStats_realm][LiveStats_char].buffsToTrack[138964]=false
 	-- LiveStats_config[LiveStats_realm][LiveStats_char].buffsToTrack[30482]=false
 	
 	if not LiveStats_config[LiveStats_realm][LiveStats_char].dotsToTrack then
@@ -532,7 +534,7 @@ function SpellSent(self, event, ...)
 				table.insert(multiplier,ATMemory[trueCount])
 			else
 				local hasteRP = (1+hasteR[trueCount+1]/425/100)*hasteP[trueCount+1]
-				local critRP = (intR[trueCount+1]*intP[trueCount+1]/2278+critR[trueCount+1]/600)/100+critP[trueCount+1]
+				local critRP = math.min((intR[trueCount+1]*intP[trueCount+1]/2278+critR[trueCount+1]/600)/100+critP[trueCount+1],2)
 				--idc about mastery for dots local mastR_p = (1+mastR[trueCount+1]/425)*mast_p[trueCount+1]
 				local spRP = (intR[trueCount+1]*intP[trueCount+1]+spR[trueCount+1])*spP[trueCount+1]
 				table.insert(multiplier,hasteRP*critRP*spRP/1000)		
