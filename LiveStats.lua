@@ -548,9 +548,9 @@ function SpellSent(self, event, ...)
 						
 						--WUSHOLAY SHIT
 						if v[1] == "Int s" then
+							local _,_,stacks,_,_,_,_,_,_,_,_,_,_,_,value, = UnitBuff("player", v[2])
+							local valuePerS = value/stacks
 							for count = 0,50,1 do
-								local _,_,_,stacks,_,_,_,_,_,_,_,_,_,_,value = UnitBuff("player", v[2])
-								local valuePerS = value/stacks
 								if count*.2 < tLeft then
 									intR[count+1] = intR[count+1]+valuePerS*floor((v[4]-tLeft+.2*count)/v[3])
 								end
