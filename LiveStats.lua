@@ -434,7 +434,7 @@ function SpellSent(self, event, ...)
 		
 		--CHECK BUFFS AND FILL IN INTERMEDIATE TABLES
 		local i = 1
-		local buff,_,_,_,_,_,tEnd,_,_,_,id,_,_,_,_ = UnitBuff("player", i)
+		local buff,_,_,_,_,_,tEnd,_,_,_,id,_,_,_,value = UnitBuff("player", i)
 		while buff do
 			tLeft = tEnd - curTime
 			for bId, bInfo in pairs(buffList) do
