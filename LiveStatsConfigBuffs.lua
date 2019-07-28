@@ -1,4 +1,4 @@
-local nmBuffs = 37
+local nmBuffs = 49
 
 local listAllBuffs = {
 	{1459,"Arcane Brilliance"},
@@ -24,7 +24,9 @@ local listAllBuffs = {
 	{116956,"Grace of Air"},
 	
 	{26297,"Berserking"},
-	{80353,"TW"},
+	
+	{80353,"Time Warp"},
+	{2825,"Blood Lust"},
 	
 	{105702,"Jade Pot"},
 	{105691,"Int flask"},
@@ -36,6 +38,14 @@ local listAllBuffs = {
 	{30482,"Molten Armor"},
 	{116257,"Invocation"},	
 	{89744,"Wizardry"},
+	
+	{123254,"Twist of Fate"},
+	{10060,"Power Infusion"},
+	{588,"Inner Fire"},
+	{89745,"Mysticism"},
+	
+	{113860,"Dark Soul: Misery"},
+	{86091,"Nethermancy"},
 	
 	{138703,"Volatile Talisman of the Shado Pan"},
 	{139133,"Cha-Ye"},

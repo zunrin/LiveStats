@@ -31,8 +31,7 @@ function SlashCmdList.LIVESTATS(msg, editbox)
 end
 
 
-local allBuffs = {
-	[89744] = {{"Int %", 5}}, --Wizardry
+local allBuffs = {	
 	[1459] = {{"SP Unique", 10},{"Crit Unique", 5}}, --Arcane intel
 	[61316] = {{"SP Unique", 10},{"Crit Unique", 5}}, --Dalaran intel
 	[77747] = {{"SP Unique", 10}}, -- Burning Wrath
@@ -54,12 +53,23 @@ local allBuffs = {
 	[128997] = {{"Mast Unique", 3000}}, -- Spirit Beast Blessing
 	[19740] = {{"Mast Unique", 3000}}, -- Blessing of Might
 	[116956] = {{"Mast Unique", 3000}}, -- Grace of Air
+	
 	[110909] = {{"Alter Time", 0}}, --Alter time
 	[138317] = {{"Haste r", 1800},{"Crit r", 1800},{"Mast r", 1800}}, --Alter time tier
 	[7302] = {{"Haste %", 7}}, --Frost Armor
 	[6117] = {{"Mast r", 3000}}, --Mage Armor
 	[30482] = {{"Crit %", 5}}, --Molten Armor
 	[116257] = {{"SP %", 15}}, --Invocation
+	[89744] = {{"Int %", 5}}, --Wizardry
+	
+	[123254] = {{"SP %", 15}}, --Twist of Fate
+	[10060] = {{"SP %", 5},{"Haste %", 20}}, --PI
+	[588] = {{"SP %", 10}}, --Inner Fire
+	[89745] = {{"Int %", 5}}, --Mysticism
+	
+	[113860] = {{"Haste %", 30}}, -- Misery
+	[86091] = {{"Int %", 5}}, --Nethermancy	
+	
 	[137590] = {{"Haste %", 30}}, --Lego Gem
 	[139133] = {{"Int r", 7903}}, --Cha-Ye (nm)
 	[104993] = {{"Int r", 1650}}, -- Jade Spirit
@@ -67,8 +77,12 @@ local allBuffs = {
 	[138786] = {{"Int s", "Electrified", 1, 10}}, -- Wusholay (nm)
 	[138703] = {{"Haste r", 9483}}, -- Volatile Talisman (nm)
 	[138964] = {{"Crit %", 100}}, -- UVLS
+	
 	[26297] = {{"Haste %", 20}}, -- Berserking
+	
 	[80353] = {{"Haste %", 30}}, -- TW
+	[2825] = {{"Haste %", 30}}, -- BL
+	
 	[105702] = {{"Int r", 4000}}, -- Jade Pot
 	[105691] = {{"Int r", 1000}}, -- Int flask
 	[104277] = {{"Int r", 300}}, -- Mogu fish
@@ -78,10 +92,15 @@ local allBuffs = {
 
 local allDots = {[114923]={1,12}, -- Nether Tempest
 					[44457]={3,12}, -- Living Bomb
+					
 					[589]={3,15}, -- SW:P
 					[34914]={3,18}, -- Vamp Touch
-					[116257]={0,0,1},
-					[137590]={1,0,1}
+					
+					[980]={2,24}, -- Agony
+					[30108]={2,14}, -- Unstable Affliction
+					[172]={2,18}, -- Corruption
+					[348]={3,15}, -- Immolate
+					
 	
 
 }
@@ -235,7 +254,7 @@ function LiveStats_VARIABLES_LOADED()
 								[125487]=false,
 								[138786]=false,
 								[26297]=false,
-								[80353]=false,
+								[80353]=true,
 								[105702]=false,
 								[105691]=false,
 								[104277]=false,
@@ -264,30 +283,44 @@ function LiveStats_VARIABLES_LOADED()
 								[61316]=false,
 								[6117]=false,
 								[30482]=false,
-								[138964]=false}
+								[138964]=false,
+								[123254]=false,
+								[10060]=false,
+								[588]=false,
+								[89745]=false,
+								[113860]=false,
+								[86091]=false,
+								[2825]=true}
 		LiveStats_config[LiveStats_realm][LiveStats_char].buffsToTrack = buffsToTrack
 	end
-	LiveStats_config[LiveStats_realm][LiveStats_char].buffsToTrack[138964]=false
-	-- LiveStats_config[LiveStats_realm][LiveStats_char].buffsToTrack[30482]=false
+	-- LiveStats_config[LiveStats_realm][LiveStats_char].buffsToTrack[123254]=false
 	
 	if not LiveStats_config[LiveStats_realm][LiveStats_char].dotsToTrack then
 		local dotsToTrack = {[114923]=false, --NT
 								[44457]=false, --LB
 								[34914]=false, --VT
 								[589]=false, --SWP
-								[116257]=false,
-								[137590]=false}
+								[980]=false,
+								[30108]=false,
+								[172]=false,
+								[348]=false}
 		LiveStats_config[LiveStats_realm][LiveStats_char].dotsToTrack = dotsToTrack
 	end
+	-- LiveStats_config[LiveStats_realm][LiveStats_char].dotsToTrack[980]=false
+	
 	if not LiveStats_config[LiveStats_realm][LiveStats_char].dotsColor then
 		local dotsColor = {[114923]={1,0,0}, --NT
 								[44457]={1,1,0}, --LB
 								[34914]={0,1,0}, --VT
 								[589]={0,1,1}, --SWP
-								[116257]={0,0,1},
-								[137590]={1,0,1}}
+								[980]={0,0,1},
+								[30108]={1,0,1},
+								[172]={1,0,1},
+								[348]={1,0,1}}
 		LiveStats_config[LiveStats_realm][LiveStats_char].dotsColor = dotsColor
 	end
+	-- LiveStats_config[LiveStats_realm][LiveStats_char].dotsColor[980]={1,0,1}
+	
 	if not LiveStats_config[LiveStats_realm][LiveStats_char].baseInt then
 		LiveStats_config[LiveStats_realm][LiveStats_char].baseInt = LiveStats_default_int
 	end
@@ -384,6 +417,7 @@ function SpellSent(self, event, ...)
 		local critP = {}
 		local spP = {}
 		local intP = {}
+		local mastP = {}
 		for count = 0,50,1	do
 			table.insert(times,count*0.2)
 			table.insert(intR,baseInt)
@@ -432,6 +466,13 @@ function SpellSent(self, event, ...)
 							for count = 0,50,1 do
 								if count*.2 < tLeft or tEnd == 0 then
 									hasteP[count+1] = hasteP[count+1]*(1+v[2]/100)
+								end
+							end
+						end
+						if v[1] == "Mast %" then
+							for count = 0,50,1 do
+								if count*.2 < tLeft or tEnd == 0 then
+									mastP[count+1] = mastP[count+1]*(1+v[2]/100)
 								end
 							end
 						end
@@ -523,6 +564,12 @@ function SpellSent(self, event, ...)
 			buff,_,_,_,_,_,tEnd,_,_,_,id,_,_,_,value = UnitBuff("player", i)
 		end
 		
+		
+		--SPE USEFUL FOR MAST AND MULTIPLIER
+		local spec = GetSpecialization()
+		local _,specName = GetSpecializationInfo(spec)
+		local mastRP = 1
+		
 		multiplier = {}
 		--CALCULATE MULTIPLIER FROM STATS
 		for count = 0,50,1	do
@@ -535,9 +582,18 @@ function SpellSent(self, event, ...)
 			else
 				local hasteRP = (1+hasteR[trueCount+1]/425/100)*hasteP[trueCount+1]
 				local critRP = math.min((intR[trueCount+1]*intP[trueCount+1]/2278+critR[trueCount+1]/600)/100+critP[trueCount+1],2)
-				--idc about mastery for dots local mastR_p = (1+mastR[trueCount+1]/425)*mast_p[trueCount+1]
 				local spRP = (intR[trueCount+1]*intP[trueCount+1]+spR[trueCount+1])*spP[trueCount+1]
-				table.insert(multiplier,hasteRP*critRP*spRP/1000)		
+				if specName == "Shadow" then
+					mastRP = (1.144+mastR[trueCount+1]/334)*mastP[trueCount+1]
+				elseif specName == "Affliction" then
+					mastRP = (1.248+mastR[trueCount+1]/193.5)*mastP[trueCount+1]				
+				elseif specName == "Demonology" then
+					mastRP = (1.08+mastR[trueCount+1]/600)*mastP[trueCount+1]
+				elseif specName == "Destruction" then
+					mastRP = ((1.08+mastR[trueCount+1]/200)*3/8)*mastP[trueCount+1]
+				end
+				
+				table.insert(multiplier,hasteRP*critRP*spRP*mastRP/1000)		
 			
 			end	
 		end

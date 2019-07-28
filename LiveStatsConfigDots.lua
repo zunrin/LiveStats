@@ -7,8 +7,10 @@ local listAllDots = {
 	{44457,"Living Bomb","MAGE"},
 	{589,"Vampiric Touch","PRIEST"},
 	{34914,"Shadow Word: Pain","PRIEST"},
-	{116257,"Invocation","WARLOCK"},
-	{137590,"Lego Gem","SHAMAN"}
+	{980,"Agony","WARLOCK"},
+	{30108,"Unstable Affliction","WARLOCK"},
+	{172,"Corruption","WARLOCK"},
+	{348,"Immolate","WARLOCK"}
 }
 
 local classDots = {}
