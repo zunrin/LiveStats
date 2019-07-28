@@ -27,7 +27,7 @@ local ATMemory = {}
 
 function SlashCmdList.LIVESTATS(msg, editbox)
 	LiveStats_ConfigFrame:Show();
-	print(LiveStats_variables_loaded)
+	-- print(LiveStats_variables_loaded)
 end
 
 
@@ -109,7 +109,7 @@ local buffList = {}
 local dotList = {}
 
 function LS:updateTrackedBuffs()
-	print("updating buffs")
+	-- print("updating buffs")
 	buffList = {}
 	for spellId, isTracked in pairs(LiveStats_config[LiveStats_realm][LiveStats_char].buffsToTrack) do
 		if isTracked then
@@ -119,7 +119,7 @@ function LS:updateTrackedBuffs()
 end
 
 function LS:updateTrackedDots()
-	print("updating dots")
+	-- print("updating dots")
 	dotList = {}
 	for spellId, isTracked in pairs(LiveStats_config[LiveStats_realm][LiveStats_char].dotsToTrack) do
 		if isTracked then
@@ -349,16 +349,16 @@ function LS:ConfigChange()
 		LiveStats_Frame:Hide()
 		return
 	end
-	print(LiveStats_config[LiveStats_realm][LiveStats_char].on)
+	-- print(LiveStats_config[LiveStats_realm][LiveStats_char].on)
 	if LiveStats_config[LiveStats_realm][LiveStats_char].on then
 		LiveStats_Frame:Show()
 		g:Show()
 	else
 		LiveStats_Frame:Hide()
 		g:Hide()
-		print("turn off?")
+		-- print("turn off?")
 	end
-	print("Hello")
+	-- print("Hello")
 end
 
 function SpellSent(self, event, ...)
