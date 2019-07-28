@@ -23,7 +23,7 @@ function LS_UpdateScrollDots()
 		lineplusoffset = line + FauxScrollFrame_GetOffset(LiveStats_ConfigDotsFrame_ScrollFrame)
 		if lineplusoffset <= nmDots then
 			getglobal("LS_DotsEntry"..line.."Check"):SetChecked(LiveStats_config[LiveStats_realm][LiveStats_char].dotsToTrack[classDots[lineplusoffset][1]])
-			print(classDots[lineplusoffset][1])
+			-- print(classDots[lineplusoffset][1])
 			getglobal("LS_DotsEntry"..line.."ColorSwatchBg"):SetTexture(LiveStats_config[LiveStats_realm][LiveStats_char].dotsColor[classDots[lineplusoffset][1]][1],
 																LiveStats_config[LiveStats_realm][LiveStats_char].dotsColor[classDots[lineplusoffset][1]][2],
 																LiveStats_config[LiveStats_realm][LiveStats_char].dotsColor[classDots[lineplusoffset][1]][3])

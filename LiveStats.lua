@@ -428,7 +428,8 @@ function SpellSent(self, event, ...)
 			table.insert(hasteP,1)
 			table.insert(critP,1)
 			table.insert(spP,1)
-			table.insert(intP,1.05)		
+			table.insert(intP,1.05)	
+			table.insert(mastP,1)	
 		end
 		
 		--CHECK BUFFS AND FILL IN INTERMEDIATE TABLES
@@ -567,7 +568,10 @@ function SpellSent(self, event, ...)
 		
 		--SPE USEFUL FOR MAST AND MULTIPLIER
 		local spec = GetSpecialization()
-		local _,specName = GetSpecializationInfo(spec)
+		local specName = ""
+		if spec~=nil then
+			_,specName = GetSpecializationInfo(spec)
+		end
 		local mastRP = 1
 		
 		multiplier = {}
@@ -584,13 +588,13 @@ function SpellSent(self, event, ...)
 				local critRP = math.min((intR[trueCount+1]*intP[trueCount+1]/2278+critR[trueCount+1]/600)/100+critP[trueCount+1],2)
 				local spRP = (intR[trueCount+1]*intP[trueCount+1]+spR[trueCount+1])*spP[trueCount+1]
 				if specName == "Shadow" then
-					mastRP = (1.144+mastR[trueCount+1]/334)*mastP[trueCount+1]
+					mastRP = (1.144+mastR[trueCount+1]/334/100)*mastP[trueCount+1]
 				elseif specName == "Affliction" then
-					mastRP = (1.248+mastR[trueCount+1]/193.5)*mastP[trueCount+1]				
+					mastRP = (1.248+mastR[trueCount+1]/193.5/100)*mastP[trueCount+1]				
 				elseif specName == "Demonology" then
-					mastRP = (1.08+mastR[trueCount+1]/600)*mastP[trueCount+1]
+					mastRP = (1.08+mastR[trueCount+1]/600/100)*mastP[trueCount+1]
 				elseif specName == "Destruction" then
-					mastRP = ((1.08+mastR[trueCount+1]/200)*3/8)*mastP[trueCount+1]
+					mastRP = ((1.08+mastR[trueCount+1]/200/100)*3/8)*mastP[trueCount+1]
 				end
 				
 				table.insert(multiplier,hasteRP*critRP*spRP*mastRP/1000)		
