@@ -5,8 +5,8 @@ local colorEntry
 local listAllDots = {
 	{114923,"Nether Tempest","MAGE"},
 	{44457,"Living Bomb","MAGE"},
-	{589,"Vampiric Touch","PRIEST"},
-	{34914,"Shadow Word: Pain","PRIEST"},
+	{589,"Shadow Word: Pain","PRIEST"},
+	{34914,"Vampiric Touch","PRIEST"},
 	{980,"Agony","WARLOCK"},
 	{30108,"Unstable Affliction","WARLOCK"},
 	{172,"Corruption","WARLOCK"},
