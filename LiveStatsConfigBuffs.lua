@@ -1,4 +1,4 @@
-local nmBuffs = 49
+local nmBuffs = 51
 
 local listAllBuffs = {
 	{1459,"Arcane Brilliance"},
@@ -51,6 +51,8 @@ local listAllBuffs = {
 	{139133,"Cha-Ye"},
 	{138898,"Breath of the Hydra"},
 	{138786,"Wusholay"},
+	{146046,"PBoI"},
+	{148906,"KKT"},
 	{138964,"UVLS"},
 	{138317,"Alter time tier"},
 		

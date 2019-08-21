@@ -23,6 +23,15 @@ local LiveStats_default_crit = 5763;
 local LiveStats_default_mast = 6065;
 SLASH_LIVESTATS1 = '/livestats'
 local ATMemory = {}
+local dmgTimes = {}
+local nTimes = 10000
+local damages = {}
+local timesFront = 1
+local timesBack = 1
+local delta_t = 5
+local g = {}
+local g2 = {}
+local liveDps = 0
 
 
 function SlashCmdList.LIVESTATS(msg, editbox)
@@ -74,9 +83,12 @@ local allBuffs = {
 	[139133] = {{"Int r", 7903}}, --Cha-Ye (nm)
 	[104993] = {{"Int r", 1650}}, -- Jade Spirit
 	[125487] = {{"Int r", 2000}}, -- Lightweave
+	[146046] = {{"Int r", 9317}}, -- PBoI
+	[148906] = {{"Int r", 10420}}, -- KKT
 	[138786] = {{"Int s", "Electrified", 1, 10}}, -- Wusholay (nm)
 	[138703] = {{"Haste r", 9483}}, -- Volatile Talisman (nm)
 	[138964] = {{"Crit %", 100}}, -- UVLS
+	
 	
 	[26297] = {{"Haste %", 20}}, -- Berserking
 	
@@ -210,6 +222,16 @@ function LS:OnLoad()
 	g.text = g:CreateFontString(nil,"ARTWORK") 
 	g.text:SetFont("Fonts\\ARIALN.ttf", 16, "OUTLINE")
 	g.text:SetPoint("CENTER",0,-50)
+	
+	
+	g2 = Graph:CreateGraphRealtime("TestRealtimeGraph", UIParent, "CENTER", "CENTER", 0, 0, 150, 150)
+	g2:SetAutoScale(true)
+	g2:SetGridSpacing(1.0, 10.0)
+	g2:SetYMax(120)
+	g2:SetXAxis(-10, 0)
+	g2:SetMode("RAW")
+	g2:SetBarColors({0.2, 0.0, 0.0, 0.4}, {1.0, 0.0, 0.0, 1.0})
+
 end
 
 function LiveStats_VARIABLES_LOADED()
@@ -290,10 +312,13 @@ function LiveStats_VARIABLES_LOADED()
 								[89745]=true,
 								[113860]=true,
 								[86091]=true,
-								[2825]=true}
+								[2825]=true,
+								[146046]=true,
+								[148906]=true}
 		LiveStats_config[LiveStats_realm][LiveStats_char].buffsToTrack = buffsToTrack
 	end
-	-- LiveStats_config[LiveStats_realm][LiveStats_char].buffsToTrack[123254]=true
+	-- LiveStats_config[LiveStats_realm][LiveStats_char].buffsToTrack[146046]=true
+	-- LiveStats_config[LiveStats_realm][LiveStats_char].buffsToTrack[148906]=true
 	
 	if not LiveStats_config[LiveStats_realm][LiveStats_char].dotsToTrack then
 		local dotsToTrack = {[114923]=false, --NT
@@ -361,6 +386,47 @@ function LS:ConfigChange()
 	-- print("Hello")
 end
 
+function LS:UpdateDpsGraph()
+	curTime=GetTime()
+	local dmg = 0
+	-- local wins = _G.Skada:GetWindows()
+	-- for i, win in ipairs(wins) do
+		-- local set = win:get_selected_set()
+		-- for i, player in ipairs(set.players) do
+			-- if player.name == UnitName("player") then
+				-- dmg = player.damage
+			-- end
+		-- end
+	-- end
+	local skada = _G.Skada
+	local set = skada.total
+	local player = skada:get_player(set,UnitGUID("player"),UnitName("player"))
+	local dmg = player.damage
+	dmgTimes[timesFront] = curTime
+	damages[curTime] = dmg
+	timesFront = (timesFront)%nTimes +1
+	-- print(dmgTimes[timesBack])
+	-- print(curTime-delta_t)
+	while dmgTimes[timesBack] < curTime-delta_t do
+		-- print(timesBack)
+		damages[dmgTimes[timesBack]]=nil
+		timesBack = (timesBack)%nTimes +1
+	end
+	local oldTime = dmgTimes[timesBack]
+	liveDps = 0
+	if curTime ~= oldTime then
+		liveDps = (dmg-damages[oldTime])/(curTime-oldTime)/100000
+		-- print(liveDps)
+	end
+	g2:AddBar(liveDps)
+	-- print(curTime)
+	-- print(oldTime)
+	-- print(dmg)
+	-- print(damages[oldTime])
+	-- print("----------")
+	-- print(times[timesBack])
+end
+
 function SpellSent(self, event, ...)
 	if event=="VARIABLES_LOADED" then
 		LiveStats_VARIABLES_LOADED()
@@ -371,6 +437,7 @@ function SpellSent(self, event, ...)
 		if arg1 ~= "player" and curTime - lastUpdate<0.2 then
 			return {}
 		end
+		
 		
 		-- print("updating"..curTime)
 		local dotCasted = false
@@ -488,9 +555,10 @@ function SpellSent(self, event, ...)
 							end
 						end
 						if v[1] == "Int r" then
+							-- print(buff)
 							for count = 0,50,1 do
 								if count*.2 < tLeft then
-									intR[count+1] = intR[count+1]+value
+									intR[count+1] = intR[count+1]+v[2]
 								end
 							end
 						end
@@ -565,6 +633,10 @@ function SpellSent(self, event, ...)
 					
 			i = i + 1;
 			buff,_,_,_,_,_,tEnd,_,_,_,id,_,_,_,value = UnitBuff("player", i)
+			-- if value then
+				-- print(value)
+			-- end
+			-- print(UnitAura("player", i))
 		end
 		
 		

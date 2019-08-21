@@ -17,7 +17,7 @@
 		return
 	end
 	LiveStats_config[LiveStats_realm][LiveStats_char].on = not LiveStats_config[LiveStats_realm][LiveStats_char].on 
-	LiveStatsConfigChange()
+	LS:ConfigChange()
  end
  
  function LiveStatsConfigBuffsShow()
