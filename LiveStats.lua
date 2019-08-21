@@ -224,13 +224,17 @@ function LS:OnLoad()
 	g.text:SetPoint("CENTER",0,-50)
 	
 	
-	g2 = Graph:CreateGraphRealtime("TestRealtimeGraph", UIParent, "CENTER", "CENTER", 0, 0, 150, 150)
+	g2 = Graph:CreateGraphRealtime("TestRealtimeGraph", UIParent, "CENTER", "CENTER", 0, 0, 250, 150)
 	g2:SetAutoScale(true)
-	g2:SetGridSpacing(1.0, 10.0)
-	g2:SetYMax(120)
+	g2:SetGridSpacing(20, 10.0)
+	g2:SetYMax(1)
 	g2:SetXAxis(-10, 0)
 	g2:SetMode("RAW")
 	g2:SetBarColors({0.2, 0.0, 0.0, 0.4}, {1.0, 0.0, 0.0, 1.0})
+	g2.text = g2:CreateFontString(nil,"ARTWORK") 
+	g2.text:SetFont("Fonts\\ARIALN.ttf", 16, "OUTLINE")
+	g2.text:SetPoint("CENTER",0,-85)
+	
 
 end
 
@@ -419,6 +423,7 @@ function LS:UpdateDpsGraph()
 		-- print(liveDps)
 	end
 	g2:AddBar(liveDps)
+	g2.text:SetText(floor(liveDps*100000))
 	-- print(curTime)
 	-- print(oldTime)
 	-- print(dmg)
@@ -696,7 +701,7 @@ function SpellSent(self, event, ...)
 		if ATCasted then
 			ATMemory = multiplier
 		end
-		g.text:SetText(multiplier[1])
+		g.text:SetText(floor(multiplier[1]*100)/100)
 		
 		LS:UpdateGraph()
 	end
