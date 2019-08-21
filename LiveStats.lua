@@ -28,7 +28,8 @@ local nTimes = 10000
 local damages = {}
 local timesFront = 1
 local timesBack = 1
-local delta_t = 5
+local delta_t = 3
+local delta_t_itgt = 0.5
 local g = {}
 local g2 = {}
 local liveDps = 0
@@ -226,11 +227,15 @@ function LS:OnLoad()
 	
 	g2 = Graph:CreateGraphRealtime("TestRealtimeGraph", UIParent, "CENTER", "CENTER", 0, 0, 250, 150)
 	g2:SetAutoScale(true)
-	g2:SetGridSpacing(20, 10.0)
+	g2:SetGridSpacing(20, 100.0)
 	g2:SetYMax(1)
 	g2:SetXAxis(-10, 0)
+	
 	g2:SetMode("RAW")
+	g2:SetYLabels(true,true)
+	
 	g2:SetBarColors({0.2, 0.0, 0.0, 0.4}, {1.0, 0.0, 0.0, 1.0})
+	g2:SetGridColorSecondary({0.5,0.5,0.5,0.25})
 	g2.text = g2:CreateFontString(nil,"ARTWORK") 
 	g2.text:SetFont("Fonts\\ARIALN.ttf", 16, "OUTLINE")
 	g2.text:SetPoint("CENTER",0,-85)
@@ -393,15 +398,6 @@ end
 function LS:UpdateDpsGraph()
 	curTime=GetTime()
 	local dmg = 0
-	-- local wins = _G.Skada:GetWindows()
-	-- for i, win in ipairs(wins) do
-		-- local set = win:get_selected_set()
-		-- for i, player in ipairs(set.players) do
-			-- if player.name == UnitName("player") then
-				-- dmg = player.damage
-			-- end
-		-- end
-	-- end
 	local skada = _G.Skada
 	local set = skada.total
 	local player = skada:get_player(set,UnitGUID("player"),UnitName("player"))
@@ -416,14 +412,41 @@ function LS:UpdateDpsGraph()
 		damages[dmgTimes[timesBack]]=nil
 		timesBack = (timesBack)%nTimes +1
 	end
-	local oldTime = dmgTimes[timesBack]
+	local deltaDmge = 0
 	liveDps = 0
-	if curTime ~= oldTime then
-		liveDps = (dmg-damages[oldTime])/(curTime-oldTime)/100000
+	if timesFront ~= timesBack then
+		local timesItgt = timesBack+1
+		local oldDmg = damages[dmgTimes[timesBack]]
+		-- print(oldDmg)
+		if dmgTimes[timesItgt] then
+			while dmgTimes[timesItgt] < curTime-delta_t+delta_t_itgt do
+				local itgtTime = dmgTimes[timesItgt]
+				local itgtMult = (delta_t-(curTime-itgtTime))/delta_t_itgt
+				deltaDmge = deltaDmge + itgtMult*(damages[itgtTime]-oldDmg)
+				oldDmg = damages[itgtTime]
+				timesItgt = (timesItgt)%nTimes +1
+			end	
+			while dmgTimes[timesItgt] < curTime-delta_t_itgt do
+				local itgtTime = dmgTimes[timesItgt]
+				local itgtMult = 1
+				deltaDmge = deltaDmge + itgtMult*(damages[itgtTime]-oldDmg)
+				oldDmg = damages[itgtTime]
+				timesItgt = (timesItgt)%nTimes +1
+			end	
+			while dmgTimes[timesItgt] < curTime do
+				local itgtTime = dmgTimes[timesItgt]
+				local itgtMult = (curTime-itgtTime)/delta_t_itgt
+				deltaDmge = deltaDmge + itgtMult*(damages[itgtTime]-oldDmg)
+				oldDmg = damages[itgtTime]
+				timesItgt = (timesItgt)%nTimes +1
+			end	
+			liveDps = (deltaDmge)/(delta_t-1)/1000
+		-- print(deltaDmge)
 		-- print(liveDps)
+		end
 	end
 	g2:AddBar(liveDps)
-	g2.text:SetText(floor(liveDps*100000))
+	g2.text:SetText(floor(liveDps*1000))
 	-- print(curTime)
 	-- print(oldTime)
 	-- print(dmg)
