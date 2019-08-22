@@ -12,9 +12,9 @@
 				self:RegisterEvent("VARIABLES_LOADED");
 			</OnLoad>
 			<OnEvent function="SpellSent"/>
-			<OnUpdate>
+			<!--<OnUpdate>
 				LS:UpdateDpsGraph();
-			</OnUpdate>
+			</OnUpdate>-->
 		</Scripts>
 	</Frame>
 </Ui>

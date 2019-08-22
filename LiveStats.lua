@@ -225,20 +225,20 @@ function LS:OnLoad()
 	g.text:SetPoint("CENTER",0,-50)
 	
 	
-	g2 = Graph:CreateGraphRealtime("TestRealtimeGraph", UIParent, "CENTER", "CENTER", 0, 0, 250, 150)
-	g2:SetAutoScale(true)
-	g2:SetGridSpacing(20, 100.0)
-	g2:SetYMax(1)
-	g2:SetXAxis(-10, 0)
+	-- g2 = Graph:CreateGraphRealtime("TestRealtimeGraph", UIParent, "CENTER", "CENTER", 0, 0, 250, 150)
+	-- g2:SetAutoScale(true)
+	-- g2:SetGridSpacing(20, 100.0)
+	-- g2:SetYMax(1)
+	-- g2:SetXAxis(-10, 0)
 	
-	g2:SetMode("RAW")
-	g2:SetYLabels(true,true)
+	-- g2:SetMode("RAW")
+	-- g2:SetYLabels(true,true)
 	
-	g2:SetBarColors({0.2, 0.0, 0.0, 0.4}, {1.0, 0.0, 0.0, 1.0})
-	g2:SetGridColorSecondary({0.5,0.5,0.5,0.25})
-	g2.text = g2:CreateFontString(nil,"ARTWORK") 
-	g2.text:SetFont("Fonts\\ARIALN.ttf", 16, "OUTLINE")
-	g2.text:SetPoint("CENTER",0,-85)
+	-- g2:SetBarColors({0.2, 0.0, 0.0, 0.4}, {1.0, 0.0, 0.0, 1.0})
+	-- g2:SetGridColorSecondary({0.5,0.5,0.5,0.25})
+	-- g2.text = g2:CreateFontString(nil,"ARTWORK") 
+	-- g2.text:SetFont("Fonts\\ARIALN.ttf", 16, "OUTLINE")
+	-- g2.text:SetPoint("CENTER",0,-85)
 	
 
 end
